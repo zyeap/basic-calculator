@@ -51,10 +51,13 @@ function inputNum(digit) {
 }
 
 function inputDecimal(dec) {
+    if (calculator.waiting === true){
+        calculator.displayValue = "0."
+        calculator.waiting = false;
+        return;
+    }
     if (!calculator.displayValue.includes(".")){
         calculator.displayValue += dec;
-    } else {
-        return;
     }
 }
 
@@ -72,7 +75,7 @@ function handleOperator(nextOperator){
         calculator.firstOperand = inputValue;
     } else if (operator) {
         const result = calculate(firstOperand, inputValue, operator);
-        calculator.displayValue = String(result);
+        calculator.displayValue = `${parseFloat(result.toFixed(7))}`;
         calculator.firstOperand = result;
     }
 
